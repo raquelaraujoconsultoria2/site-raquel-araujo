@@ -1,0 +1,108 @@
+---
+import { MENU, SITE, whatsappUrl } from '../config';
+import Logo from './Logo.astro';
+const wa = whatsappUrl();
+const ano = new Date().getFullYear();
+---
+
+<footer class="rodape">
+  <div class="container grade">
+    <div class="marca">
+      <Logo negativo />
+      <p>Consultoria de empresário para empresário. Estratégia, governança e rotina de gestão para empresas que querem crescer sem depender do dono para tudo.</p>
+    </div>
+    <nav aria-label="Rodapé">
+      <h2>Navegação</h2>
+      <ul>
+        {MENU.map((i) => <li><a href={i.href}>{i.label}</a></li>)}
+        <li><a href="/#agendar">Agendar conversa</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h2>Contato</h2>
+      <ul>
+        <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+        {wa && <li><a href={wa} target="_blank" rel="noopener">WhatsApp</a></li>}
+      </ul>
+    </div>
+  </div>
+  <div class="container base">
+    <span>© {ano} {SITE.nome} · Todos os direitos reservados</span>
+    <span>
+      <a href="/privacidade">Política de privacidade</a>
+      <button type="button" data-abrir-cookies>Preferências de cookies</button>
+    </span>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    background: var(--petroleo);
+    color: rgb(245 243 238 / 0.75);
+    padding-top: clamp(3.5rem, 7vw, 5rem);
+    font-size: 0.95rem;
+  }
+  .grade {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: 1fr;
+    padding-bottom: 3rem;
+  }
+  @media (min-width: 768px) {
+    .grade {
+      grid-template-columns: 1.5fr 1fr 1.5fr;
+    }
+  }
+  .marca p {
+    max-width: 26rem;
+    margin-top: 1.25rem;
+  }
+  h2 {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dourado);
+    margin-bottom: 1rem;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  a {
+    text-decoration: none;
+    overflow-wrap: break-word;
+  }
+  a:hover {
+    color: var(--areia);
+  }
+  .base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid rgb(232 217 187 / 0.15);
+    font-size: 0.82rem;
+  }
+  .base span {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  button {
+    background: none;
+    border: 0;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+  button:hover {
+    color: var(--areia);
+  }
+</style>

@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base titulo="Mensagem recebida" semIndex>
+  <section class="secao">
+    <div class="container">
+      <p class="rotulo">Recebido</p>
+      <h1>Obrigada pelo contato.</h1>
+      <p class="lead" data-texto>Sua mensagem chegou. Vou ler com atenção e retorno em breve pelo e-mail ou WhatsApp que você informou.</p>
+      <p style="margin-top:2rem"><a class="btn btn--primario" href="/">Voltar ao início</a> <a class="link-seta" style="margin-left:1.5rem" href="/conteudos">Ler os conteúdos</a></p>
+    </div>
+  </section>
+  <script>
+    if (new URLSearchParams(location.search).get('origem') === 'ebook') {
+      document.querySelector('[data-texto]')!.textContent = 'Seu e-mail está na lista. Assim que o material for lançado, ele chega na sua caixa de entrada.';
+    }
+  </script>
+</Base>

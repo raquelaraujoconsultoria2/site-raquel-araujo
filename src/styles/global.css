@@ -1,0 +1,313 @@
+@import '@fontsource-variable/newsreader/opsz.css';
+@import '@fontsource-variable/newsreader/opsz-italic.css';
+@import '@fontsource-variable/manrope';
+
+:root {
+  --petroleo: #132f33;
+  --petroleo-2: #1c4146;
+  --petroleo-3: #2a5a60;
+  --dourado: #b8955a;
+  --dourado-escuro: #8e6f3d;
+  --areia: #e8d9bb;
+  --creme: #f5f3ee;
+  --creme-2: #ece8df;
+  --branco: #fffdf9;
+  --texto: #1d2a2c;
+  --texto-suave: #4d5c5e;
+  --linha: #d9d3c6;
+
+  --serif: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
+  --sans: 'Manrope Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --largura: 1200px;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --secao: clamp(4.5rem, 10vw, 8rem);
+  --raio: 4px;
+  --sombra: 0 1px 2px rgb(19 47 51 / 0.05), 0 12px 32px -12px rgb(19 47 51 / 0.18);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--creme);
+  color: var(--texto);
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.6em;
+  color: var(--petroleo);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+}
+h2 {
+  font-size: clamp(2rem, 4.2vw, 3.1rem);
+}
+h3 {
+  font-size: clamp(1.35rem, 2.2vw, 1.6rem);
+  line-height: 1.25;
+}
+
+em {
+  font-style: italic;
+}
+
+p {
+  margin: 0 0 1em;
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 2px solid var(--dourado);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--areia);
+  color: var(--petroleo);
+}
+
+/* ---------- utilitários ---------- */
+
+.container {
+  width: 100%;
+  max-width: var(--largura);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.secao {
+  padding-block: var(--secao);
+}
+
+.secao--escura {
+  background: var(--petroleo);
+  color: var(--creme);
+}
+.secao--escura h2,
+.secao--escura h3 {
+  color: var(--creme);
+}
+.secao--clara {
+  background: var(--branco);
+}
+
+.rotulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dourado-escuro);
+  margin-bottom: 1.25rem;
+}
+.rotulo::before {
+  content: '';
+  width: 2rem;
+  height: 1px;
+  background: currentColor;
+}
+.secao--escura .rotulo {
+  color: var(--dourado);
+}
+
+.destaque {
+  font-style: italic;
+  color: var(--dourado-escuro);
+}
+.secao--escura .destaque {
+  color: var(--areia);
+}
+
+.lead {
+  font-size: clamp(1.1rem, 1.6vw, 1.25rem);
+  color: var(--texto-suave);
+  max-width: 40rem;
+}
+.secao--escura .lead {
+  color: rgb(245 243 238 / 0.78);
+}
+
+.cabecalho-secao {
+  max-width: 46rem;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+/* ---------- botões ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3.25rem;
+  padding: 0.85rem 1.6rem;
+  border: 1px solid transparent;
+  border-radius: var(--raio);
+  font: 600 0.95rem/1.2 var(--sans);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s,
+    transform 0.2s;
+}
+.btn:hover {
+  transform: translateY(-1px);
+}
+.btn--primario {
+  background: var(--petroleo);
+  color: var(--creme);
+}
+.btn--primario:hover {
+  background: var(--petroleo-2);
+}
+.btn--dourado {
+  background: var(--dourado);
+  color: var(--petroleo);
+}
+.btn--dourado:hover {
+  background: #c8a66b;
+}
+.btn--contorno {
+  border-color: var(--petroleo);
+  color: var(--petroleo);
+  background: transparent;
+}
+.btn--contorno:hover {
+  background: var(--petroleo);
+  color: var(--creme);
+}
+.secao--escura .btn--contorno {
+  border-color: rgb(232 217 187 / 0.5);
+  color: var(--areia);
+}
+.secao--escura .btn--contorno:hover {
+  background: var(--areia);
+  color: var(--petroleo);
+}
+
+.link-seta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  color: var(--petroleo);
+  border-bottom: 1px solid var(--dourado);
+  padding-bottom: 2px;
+}
+.link-seta::after {
+  content: '→';
+  transition: transform 0.2s;
+}
+.link-seta:hover::after {
+  transform: translateX(3px);
+}
+
+/* ---------- conteúdo longo (artigos, política) ---------- */
+
+.prosa {
+  max-width: 42rem;
+  font-size: 1.125rem;
+}
+.prosa h2 {
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  margin-top: 2.2em;
+}
+.prosa h3 {
+  margin-top: 1.8em;
+}
+.prosa blockquote {
+  margin: 2em 0;
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--dourado);
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  line-height: 1.4;
+  color: var(--petroleo);
+}
+.prosa ul,
+.prosa ol {
+  padding-left: 1.25rem;
+}
+.prosa li {
+  margin-bottom: 0.4em;
+}
+
+/* ---------- animação de entrada ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .revelar {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.8s ease,
+      transform 0.8s ease;
+  }
+  .js .revelar.visivel {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- campos de formulário ---------- */
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23132F33' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem !important;
+  cursor: pointer;
+}

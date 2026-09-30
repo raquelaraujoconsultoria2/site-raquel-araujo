@@ -1,0 +1,61 @@
+---
+import { Picture } from 'astro:assets';
+interface Props {
+  rotulo: string;
+  foto?: ImageMetadata;
+  alt?: string;
+}
+const { rotulo, foto, alt = '' } = Astro.props;
+---
+
+<section class:list={['cabecalho', { 'com-foto': foto }]}>
+  <div class="container grade">
+    <div>
+      <p class="rotulo">{rotulo}</p>
+      <h1><slot name="titulo" /></h1>
+      <div class="lead"><slot /></div>
+    </div>
+    {
+      foto && (
+        <figure>
+          <Picture src={foto} alt={alt} widths={[480, 720, 960]} sizes="(min-width: 1024px) 440px, 100vw" formats={['avif', 'webp']} loading="eager" />
+        </figure>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .cabecalho {
+    padding-block: clamp(3rem, 7vw, 6rem) clamp(3rem, 6vw, 5rem);
+    border-bottom: 1px solid var(--linha);
+  }
+  .grade {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 1024px) {
+    .com-foto .grade {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+  }
+  h1 {
+    font-size: clamp(2.3rem, 5vw, 3.8rem);
+    max-width: 18ch;
+  }
+  .lead :global(p:last-child) {
+    margin-bottom: 0;
+  }
+  figure {
+    margin: 0;
+    max-width: 440px;
+  }
+  figure :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 20%;
+    border-radius: 2px;
+  }
+</style>

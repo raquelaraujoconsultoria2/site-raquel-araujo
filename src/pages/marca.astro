@@ -1,0 +1,128 @@
+---
+// Página interna (fora do menu e do Google) para a Raquel escolher a variação do logo.
+import Base from '../layouts/Base.astro';
+const variacoes = [
+  { n: '1', nome: 'Clássico', desc: 'RA entrelaçado dentro de um duplo círculo fino. É a evolução mais direta do monograma atual.' },
+  { n: '2', nome: 'Filete', desc: 'R e A separados por um filete dourado vertical. Mais moderno e editorial, e funciona bem em linha única.' },
+  { n: '3', nome: 'Arco', desc: 'RA sob um arco com linha de base. Remete a porta ou pórtico: entrada, estrutura, permanência.' },
+];
+---
+
+<Base titulo="Marca: variações do logo" semIndex>
+  <section class="secao">
+    <div class="container">
+      <p class="rotulo">Uso interno</p>
+      <h1>Variações do logo</h1>
+      <p class="lead">Três propostas de monograma, em versão positiva (fundo claro) e negativa (fundo escuro). O logo não leva telefone, e-mail nem site.</p>
+
+      <div class="variacoes">
+        {
+          variacoes.map((v) => (
+            <article>
+              <div class="par">
+                <div class="claro"><img src={`/brand/ra-monograma-${v.n}.svg`} alt={`Monograma ${v.nome}, versão positiva`} /></div>
+                <div class="escuro"><img src={`/brand/ra-monograma-${v.n}-negativo.svg`} alt={`Monograma ${v.nome}, versão negativa`} /></div>
+              </div>
+              <h2>{v.n}. {v.nome}</h2>
+              <p>{v.desc}</p>
+              <p class="arquivos">
+                <a href={`/brand/ra-monograma-${v.n}.svg`} download>SVG positivo</a> ·{' '}
+                <a href={`/brand/ra-monograma-${v.n}-negativo.svg`} download>SVG negativo</a>
+              </p>
+            </article>
+          ))
+        }
+      </div>
+
+      <h2 class="sub">Assinatura horizontal</h2>
+      <div class="assinaturas">
+        <div class="claro"><img src="/brand/ra-assinatura-horizontal.svg" alt="Assinatura horizontal, versão positiva" /></div>
+        <div class="escuro"><img src="/brand/ra-assinatura-horizontal-negativo.svg" alt="Assinatura horizontal, versão negativa" /></div>
+      </div>
+
+      <h2 class="sub">Cores</h2>
+      <ul class="cores">
+        <li style="--c:#132F33"><span></span>Verde-petróleo<br /><code>#132F33</code></li>
+        <li style="--c:#B8955A"><span></span>Dourado<br /><code>#B8955A</code></li>
+        <li style="--c:#E8D9BB"><span></span>Areia<br /><code>#E8D9BB</code></li>
+        <li style="--c:#F5F3EE"><span></span>Creme<br /><code>#F5F3EE</code></li>
+      </ul>
+      <p>Tipografia: <strong>Newsreader</strong> (títulos e monograma) e <strong>Manrope</strong> (textos).</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .variacoes {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    margin-top: 3rem;
+  }
+  .par {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 1.25rem;
+  }
+  .claro,
+  .escuro {
+    display: grid;
+    place-items: center;
+    padding: 2rem 1rem;
+    border: 1px solid var(--linha);
+  }
+  .claro {
+    background: var(--creme);
+  }
+  .escuro {
+    background: var(--petroleo);
+    border-color: var(--petroleo);
+  }
+  .par img {
+    height: 110px;
+    width: auto;
+  }
+  article h2 {
+    font-size: 1.5rem;
+  }
+  article p {
+    color: var(--texto-suave);
+  }
+  .arquivos {
+    font-size: 0.9rem;
+  }
+  .sub {
+    margin-top: 4rem;
+    font-size: 1.8rem;
+  }
+  .assinaturas {
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 900px) {
+    .assinaturas {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .assinaturas img {
+    height: 90px;
+    width: auto;
+    max-width: 100%;
+  }
+  .cores {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    font-size: 0.9rem;
+  }
+  .cores span {
+    display: block;
+    width: 96px;
+    height: 96px;
+    background: var(--c);
+    border: 1px solid var(--linha);
+    margin-bottom: 0.5rem;
+  }
+</style>

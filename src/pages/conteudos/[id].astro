@@ -1,0 +1,96 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChamadaFinal from '../../components/ChamadaFinal.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const artigos = await getCollection('artigos', ({ data }) => !data.rascunho);
+  return artigos.map((artigo) => ({ params: { id: artigo.id }, props: { artigo } }));
+}
+
+const { artigo } = Astro.props;
+const { Content } = await render(artigo);
+const { titulo, resumo, data, categoria, tipo, video } = artigo.data;
+const dataFmt = data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC' });
+---
+
+<Base titulo={titulo} descricao={resumo} tipo="article">
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: titulo,
+      description: resumo,
+      datePublished: data.toISOString(),
+      author: { '@type': 'Person', name: 'Raquel Araújo' },
+      inLanguage: 'pt-BR',
+    })}
+  />
+  <article class="secao">
+    <div class="container">
+      <header>
+        <a class="voltar" href="/conteudos">← Conteúdos</a>
+        <p class="rotulo">{tipo === 'video' ? 'Vídeo' : 'Artigo'} · {categoria}</p>
+        <h1>{titulo}</h1>
+        <p class="lead">{resumo}</p>
+        <p class="autoria">Por Raquel Araújo · <time datetime={data.toISOString()}>{dataFmt}</time></p>
+      </header>
+      {
+        video && (
+          <div class="video">
+            <iframe
+              src={`https://www.youtube-nocookie.com/embed/${video}`}
+              title={titulo}
+              loading="lazy"
+              allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            />
+          </div>
+        )
+      }
+      <div class="prosa">
+        <Content />
+      </div>
+    </div>
+  </article>
+  <ChamadaFinal />
+</Base>
+
+<style>
+  header {
+    max-width: 46rem;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--linha);
+  }
+  .voltar {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: var(--texto-suave);
+  }
+  h1 {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+  }
+  .autoria {
+    font-size: 0.9rem;
+    color: var(--texto-suave);
+    margin: 1.5rem 0 0;
+  }
+  .video {
+    aspect-ratio: 16 / 9;
+    max-width: 52rem;
+    margin-bottom: 3rem;
+  }
+  .video iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .prosa {
+    color: var(--texto);
+  }
+</style>

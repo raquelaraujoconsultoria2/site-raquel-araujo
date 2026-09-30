@@ -1,0 +1,131 @@
+---
+import Base from '../layouts/Base.astro';
+import CabecalhoPagina from '../components/CabecalhoPagina.astro';
+import ChamadaFinal from '../components/ChamadaFinal.astro';
+import { Picture } from 'astro:assets';
+import foto from '../assets/fotos/raquel-6737.jpg';
+import foto2 from '../assets/fotos/raquel-6671.jpg';
+import foto3 from '../assets/fotos/raquel-6516.jpg';
+
+// PENDENTE: Raquel revisar a biografia e confirmar quais números da trajetória podem ser publicados.
+const papeis = [
+  { t: 'Empresária', d: 'Ajudou a construir a American Burrs do zero até a liderança nacional no seu segmento.' },
+  { t: 'Conselheira', d: 'Integra o conselho da empresa que ajudou a construir.' },
+  { t: 'Estrategista', d: 'Ajuda outros donos a estruturar estratégia, governança e rotina de gestão.' },
+  { t: 'Advogada', d: 'Formação em Direito, base para o olhar sobre sociedade, contratos e governança.' },
+];
+---
+
+<Base titulo="Biografia" descricao="Raquel Araújo: empresária, conselheira e estrategista. A trajetória de quem construiu uma empresa do zero e hoje ajuda outros donos a crescer com método.">
+  <CabecalhoPagina rotulo="Biografia" foto={foto} alt="Retrato em preto e branco de Raquel Araújo sorrindo">
+    <Fragment slot="titulo">Experiência que se transforma <em class="destaque">em direção.</em></Fragment>
+    <p>Empresária antes de ser consultora. Conselheira, estrategista e, no currículo, advogada.</p>
+  </CabecalhoPagina>
+
+  <section class="secao">
+    <div class="container prosa-grade">
+      <div class="prosa">
+        <h2>Do outro lado da mesa</h2>
+        <p>
+          Raquel Araújo ajudou a construir uma empresa do zero. A American Burrs começou pequena, cresceu fase a fase
+          e chegou à liderança nacional no seu segmento. Nesse caminho, ela viveu por dentro cada dor do crescimento:
+          o começo em que o dono faz tudo, a tração que atropela a estrutura, a hora em que “se eu não estiver, nada
+          acontece”.
+        </p>
+        <p>
+          Foi também nesse caminho que ela entendeu o papel que o sócio precisa ter em cada fase, e o quanto o sócio
+          precisa amadurecer junto com a empresa. Sair da operação, passar a cobrar resultado em vez de tarefa,
+          formar gestores que decidem, colocar número na conversa.
+        </p>
+        <h2>Hoje</h2>
+        <p>
+          Hoje Raquel é conselheira da empresa que ajudou a construir e leva esse repertório para outros donos. O
+          trabalho é próximo, confidencial e orientado à realidade de cada negócio: não é a consultoria que entrega um
+          relatório e vai embora, é acompanhamento até o resultado aparecer.
+        </p>
+        <p>
+          O diferencial é a visão transversal: enxergar a empresa inteira e conectar áreas que trabalham separadas
+          (marketing, vendas, operação, financeiro), sempre com a governança como ponto de partida, porque é ela que
+          pensa a estratégia para a perenidade do negócio.
+        </p>
+        <blockquote>A experiência só se transforma em valor quando encontra espaço para ser compartilhada.</blockquote>
+      </div>
+      <aside>
+        <ul class="papeis">
+          {
+            papeis.map((p) => (
+              <li>
+                <h3>{p.t}</h3>
+                <p>{p.d}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="fotos">
+    <Picture src={foto2} alt="Raquel Araújo encostada em uma parede de tijolos, segurando um notebook" widths={[480, 800, 1200]} sizes="(min-width: 768px) 40vw, 100vw" formats={['avif', 'webp']} />
+    <Picture src={foto3} alt="Raquel Araújo sentada em um escritório aberto, sorrindo" widths={[600, 1000, 1600]} sizes="(min-width: 768px) 60vw, 100vw" formats={['avif', 'webp']} />
+  </section>
+
+  <ChamadaFinal />
+</Base>
+
+<style>
+  .prosa-grade {
+    display: grid;
+    gap: 3rem;
+  }
+  @media (min-width: 1024px) {
+    .prosa-grade {
+      grid-template-columns: 1.4fr 0.8fr;
+      gap: 5rem;
+    }
+  }
+  .prosa h2:first-child {
+    margin-top: 0;
+  }
+  .prosa p {
+    color: var(--texto-suave);
+  }
+  .papeis {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: sticky;
+    top: 7rem;
+  }
+  .papeis li {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--linha);
+  }
+  .papeis li:first-child {
+    border-top: 2px solid var(--petroleo);
+  }
+  .papeis h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+  .papeis p {
+    margin: 0;
+    font-size: 0.93rem;
+    color: var(--texto-suave);
+  }
+  .fotos {
+    display: grid;
+    gap: 4px;
+  }
+  @media (min-width: 768px) {
+    .fotos {
+      grid-template-columns: 2fr 3fr;
+    }
+  }
+  .fotos :global(img) {
+    width: 100%;
+    height: 100%;
+    max-height: 640px;
+    object-fit: cover;
+  }
+</style>

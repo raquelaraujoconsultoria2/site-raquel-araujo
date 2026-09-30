@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import CardArtigo from './CardArtigo.astro';
+import Ebook from './Ebook.astro';
+
+const artigos = (await getCollection('artigos', ({ data }) => !data.rascunho))
+  .sort((a, b) => b.data.data.valueOf() - a.data.data.valueOf())
+  .slice(0, 3);
+---
+
+<section class="secao" id="conteudos">
+  <div class="container">
+    <div class="topo revelar">
+      <div class="cabecalho-secao">
+        <p class="rotulo">Conteúdos</p>
+        <h2>Para pensar a empresa <em class="destaque">de fora da operação.</em></h2>
+      </div>
+      <a class="link-seta" href="/conteudos">Ver todos os conteúdos</a>
+    </div>
+
+    <div class="grade revelar">
+      {artigos.map((a) => <CardArtigo artigo={a} />)}
+    </div>
+
+    <div class="revelar">
+      <Ebook />
+    </div>
+  </div>
+</section>
+
+<style>
+  .topo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem 2rem;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+  .topo .cabecalho-secao {
+    margin-bottom: 0;
+  }
+  .grade {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+    margin-bottom: 3rem;
+  }
+</style>

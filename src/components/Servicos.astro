@@ -1,0 +1,148 @@
+---
+import { SERVICOS } from '../data';
+---
+
+<section class="secao secao--clara" id="servicos">
+  <div class="container">
+    <div class="cabecalho-secao revelar">
+      <p class="rotulo">Como posso ajudar</p>
+      <h2>Clareza para decidir. <em class="destaque">Estrutura para crescer.</em></h2>
+      <p class="lead">
+        Visão transversal: enxergar a empresa inteira e conectar as áreas que hoje trabalham separadas. Tudo começa
+        pela governança, que é quem pensa a estratégia para o negócio durar.
+      </p>
+    </div>
+
+    <div class="cards">
+      {
+        SERVICOS.map((s, i) => (
+          <article class:list={['card', 'revelar', { principal: s.principal }]}>
+            <div class="cabeca">
+              <span class="numero">0{i + 1}</span>
+              {s.principal && <span class="selo">Carro-chefe</span>}
+              <h3>{s.titulo}</h3>
+              <p>{s.resumo}</p>
+            </div>
+            <ul>
+              {s.itens.map((it) => (
+                <li>{it}</li>
+              ))}
+            </ul>
+            <a class="link-seta" href={s.publico === 'lideres' ? '/para-lideres' : `/para-empresas#${s.id}`}>
+              Saiba mais
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .cards {
+    display: grid;
+    gap: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 768px) {
+    .principal {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (min-width: 1024px) {
+    .cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .card.principal {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      column-gap: 4rem;
+      align-items: end;
+    }
+    .principal .cabeca {
+      grid-row: span 2;
+    }
+    .principal ul {
+      margin-bottom: 1.5rem;
+    }
+    .principal .link-seta {
+      grid-column: 2;
+      justify-self: start;
+    }
+  }
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    background: var(--creme);
+    border: 1px solid var(--linha);
+    border-radius: 6px;
+  }
+  .principal {
+    background: var(--petroleo);
+    color: var(--creme);
+    border-color: var(--petroleo);
+  }
+  .principal h3 {
+    color: var(--creme);
+    font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  }
+  .principal p {
+    color: rgb(245 243 238 / 0.8);
+  }
+  .principal .link-seta {
+    color: var(--areia);
+  }
+  .numero {
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: var(--dourado);
+    margin-bottom: 1.5rem;
+  }
+  .selo {
+    position: absolute;
+    top: clamp(1.75rem, 3vw, 2.5rem);
+    right: clamp(1.75rem, 3vw, 2.5rem);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--petroleo);
+    background: var(--areia);
+    padding: 0.3rem 0.6rem;
+    border-radius: 2px;
+  }
+  p {
+    color: var(--texto-suave);
+  }
+  ul {
+    list-style: none;
+    margin: 0 0 2rem;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+    font-size: 0.93rem;
+  }
+  li {
+    padding-left: 1.25rem;
+    position: relative;
+  }
+  li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 0.5rem;
+    height: 1px;
+    background: var(--dourado);
+  }
+  .link-seta {
+    margin-top: auto;
+    align-self: flex-start;
+  }
+</style>

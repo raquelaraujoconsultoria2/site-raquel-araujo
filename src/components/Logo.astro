@@ -1,0 +1,58 @@
+---
+// Assinatura do cabeçalho: monograma (SVG) + nome em texto.
+interface Props {
+  negativo?: boolean;
+}
+const { negativo = false } = Astro.props;
+const src = negativo ? '/brand/ra-monograma-1-negativo.svg' : '/brand/ra-monograma-1.svg';
+---
+
+<a href="/" class:list={['logo', { negativo }]} aria-label="Raquel Araújo, página inicial">
+  <img src={src} alt="" width="44" height="44" />
+  <span class="nome">
+    Raquel Araújo
+    <small>Estratégia · Governança · Negócios</small>
+  </span>
+</a>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--petroleo);
+  }
+  .logo img {
+    width: 44px;
+    height: 44px;
+    flex: none;
+  }
+  .nome {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    line-height: 1.1;
+  }
+  small {
+    font-family: var(--sans);
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dourado-escuro);
+    margin-top: 0.3rem;
+  }
+  @media (max-width: 420px) {
+    small {
+      display: none;
+    }
+  }
+  .negativo {
+    color: var(--creme);
+  }
+  .negativo small {
+    color: var(--dourado);
+  }
+</style>

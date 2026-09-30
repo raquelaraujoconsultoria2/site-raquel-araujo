@@ -1,0 +1,105 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config';
+// PENDENTE: completar razão social/CNPJ (ou CPF) da controladora e revisar com a Raquel.
+const atualizado = '30 de setembro de 2026';
+---
+
+<Base titulo="Política de privacidade" descricao="Como o site de Raquel Araújo coleta, usa e protege os seus dados pessoais, conforme a LGPD.">
+  <section class="secao">
+    <div class="container">
+      <p class="rotulo">Privacidade</p>
+      <h1>Política de privacidade</h1>
+      <p class="lead">Última atualização: {atualizado}</p>
+
+      <div class="prosa">
+        <p>
+          Esta política explica como o site <strong>{SITE.url.replace('https://', '')}</strong> trata os dados
+          pessoais de quem o visita, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018, LGPD).
+        </p>
+
+        <h2>Quem é a controladora dos dados</h2>
+        <p>
+          Raquel Araújo, responsável por este site e pelos serviços de consultoria aqui apresentados. Contato para
+          assuntos de privacidade: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+        </p>
+
+        <h2>Quais dados coletamos</h2>
+        <ul>
+          <li>
+            <strong>Formulário de contato:</strong> nome, empresa, papel na empresa, faixa de faturamento, e-mail,
+            WhatsApp, a descrição do desafio que você escolher compartilhar e, se você fizer o diagnóstico rápido, o
+            resultado dele.
+          </li>
+          <li><strong>Material gratuito:</strong> nome e e-mail.</li>
+          <li>
+            <strong>Agendamento:</strong> quando você marca uma conversa pela agenda on-line (Cal.com), os dados
+            informados no agendamento.
+          </li>
+          <li>
+            <strong>Navegação:</strong> somente se você aceitar os cookies de medição, dados estatísticos de uso do
+            site coletados pelo Google Analytics, com IP anonimizado.
+          </li>
+        </ul>
+        <p>O diagnóstico rápido é calculado no seu próprio navegador. As respostas não são enviadas a ninguém, a menos que você envie o formulário de contato.</p>
+
+        <h2>Para que usamos</h2>
+        <ul>
+          <li>Responder ao seu contato e agendar a primeira conversa;</li>
+          <li>Entender o momento da sua empresa para preparar essa conversa;</li>
+          <li>Enviar o material gratuito e conteúdos por e-mail, quando você autorizar;</li>
+          <li>Entender, de forma agregada, como o site é usado para melhorá-lo.</li>
+        </ul>
+        <p>
+          A base legal é o seu <strong>consentimento</strong> (art. 7º, I, da LGPD), dado ao marcar a caixa de
+          autorização nos formulários ou ao aceitar os cookies. Você pode retirá-lo a qualquer momento.
+        </p>
+
+        <h2>Com quem compartilhamos</h2>
+        <p>Não vendemos nem cedemos seus dados. Eles passam apenas pelos serviços necessários para o site funcionar:</p>
+        <ul>
+          <li><strong>Netlify</strong>: hospedagem do site e recebimento dos formulários;</li>
+          <li><strong>Cal.com</strong>: agenda on-line, quando você agenda uma conversa;</li>
+          <li><strong>Google Analytics</strong>: medição de audiência, somente com o seu aceite;</li>
+          <li><strong>Microsoft 365</strong>: e-mail em que as mensagens são recebidas e respondidas.</li>
+        </ul>
+        <p>Alguns desses fornecedores armazenam dados fora do Brasil, com as salvaguardas previstas na LGPD.</p>
+
+        <h2>Por quanto tempo guardamos</h2>
+        <p>
+          Os dados de contato são mantidos enquanto houver relação ou interesse comercial, e excluídos quando você
+          pedir ou quando deixarem de ser necessários.
+        </p>
+
+        <h2>Cookies</h2>
+        <p>
+          O site funciona sem cookies de rastreamento. Os cookies do Google Analytics só são carregados se você
+          clicar em “Aceitar” no aviso de cookies. Você pode mudar essa escolha a qualquer momento em
+          <button type="button" class="link" data-abrir-cookies>preferências de cookies</button>.
+        </p>
+
+        <h2>Seus direitos</h2>
+        <p>
+          Você pode, a qualquer momento, pedir confirmação do tratamento, acesso, correção, anonimização, portabilidade
+          ou exclusão dos seus dados, além de informações sobre com quem foram compartilhados (art. 18 da LGPD). Basta
+          escrever para <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .prosa {
+    margin-top: 2.5rem;
+  }
+  .link {
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+</style>

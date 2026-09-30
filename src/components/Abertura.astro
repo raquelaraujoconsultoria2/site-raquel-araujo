@@ -1,0 +1,123 @@
+---
+import { Picture } from 'astro:assets';
+import foto from '../assets/fotos/raquel-6346.jpg';
+---
+
+<section class="abertura">
+  <div class="container grade">
+    <div class="texto">
+      <p class="rotulo">Consultoria de empresário para empresário</p>
+      <h1>Sua empresa não precisa depender de você <em class="destaque">para tudo.</em></h1>
+      <p class="lead">
+        Estratégia, governança e rotina de gestão, trazidas por uma empresária que construiu uma empresa do zero
+        e hoje senta no conselho dela.
+      </p>
+      <div class="acoes">
+        <a href="#agendar" class="btn btn--primario">Agendar conversa</a>
+        <a href="#diagnostico" class="btn btn--contorno">Fazer o diagnóstico</a>
+      </div>
+    </div>
+    <figure class="foto">
+      <Picture
+        src={foto}
+        alt="Raquel Araújo em seu escritório, apoiada na mesa de trabalho"
+        widths={[480, 720, 960, 1200]}
+        sizes="(min-width: 1024px) 520px, 100vw"
+        formats={['avif', 'webp']}
+        loading="eager"
+        fetchpriority="high"
+      />
+    </figure>
+  </div>
+
+  <div class="container">
+    <ul class="provas">
+      <li><strong>Empresária antes de consultora</strong> Ajudou a construir uma empresa do zero até a liderança nacional no seu segmento.</li>
+      <li><strong>Do outro lado da mesa</strong> Hoje é conselheira da empresa que ajudou a construir.</li>
+      <li><strong>Acompanhamento até o resultado</strong> Não é relatório entregue na gaveta. É método implantado.</li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .abertura {
+    padding-top: clamp(2rem, 5vw, 4.5rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+    overflow: hidden;
+  }
+  .grade {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4rem);
+    align-items: center;
+  }
+  @media (min-width: 1024px) {
+    .grade {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+  }
+  h1 {
+    max-width: 14ch;
+  }
+  .acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2.25rem;
+  }
+  @media (max-width: 479px) {
+    .acoes .btn {
+      flex: 1 1 100%;
+    }
+  }
+  .foto {
+    margin: 0;
+    position: relative;
+    max-width: 520px;
+    justify-self: center;
+    width: 100%;
+  }
+  .foto::before {
+    content: '';
+    position: absolute;
+    inset: 1.25rem -1.25rem -1.25rem 1.25rem;
+    border: 1px solid var(--dourado);
+    border-radius: 2px;
+  }
+  .foto :global(img) {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 25%;
+    border-radius: 2px;
+  }
+  @media (max-width: 1023px) {
+    .foto {
+      max-width: 440px;
+      order: -1;
+      margin-right: 1.25rem;
+    }
+    .foto :global(img) {
+      aspect-ratio: 1 / 1;
+    }
+  }
+  .provas {
+    list-style: none;
+    margin: clamp(3.5rem, 7vw, 5.5rem) 0 0;
+    padding: 2rem 0 0;
+    border-top: 1px solid var(--linha);
+    display: grid;
+    gap: 1.5rem 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    font-size: 0.95rem;
+    color: var(--texto-suave);
+  }
+  .provas strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--petroleo);
+    margin-bottom: 0.3rem;
+  }
+</style>

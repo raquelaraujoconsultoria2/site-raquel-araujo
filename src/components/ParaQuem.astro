@@ -1,0 +1,142 @@
+---
+const perfis = [
+  { titulo: 'Donos de pequenas e médias empresas', texto: 'Que construíram o negócio e agora percebem que ele cresceu mais do que a forma de gerir.' },
+  { titulo: 'Sócios', texto: 'Que precisam alinhar papéis, expectativas e o rumo da empresa antes que a diferença vire conflito.' },
+  { titulo: 'Sucessores', texto: 'Que estão assumindo o comando e querem fazer isso com método, sem apagar o que deu certo.' },
+  { titulo: 'Empresas familiares', texto: 'Onde família, sociedade e gestão se misturam e precisam de regras claras para durar.' },
+];
+const antes = [
+  'Tudo passa por você, e os problemas chegam direto na sua mesa',
+  'Áreas que trabalham desconectadas, cada uma no seu mundo',
+  'Decisões no calor do dia a dia, sem indicadores',
+  'Pouco tempo, ou nenhum, para pensar no longo prazo',
+];
+const depois = [
+  'Processos estruturados e responsabilidades claras',
+  'Gestores que decidem e respondem por metas',
+  'Rotina de acompanhamento com indicadores',
+  'Você de volta ao papel de quem pensa o futuro',
+];
+---
+
+<section class="secao" id="para-quem">
+  <div class="container">
+    <div class="cabecalho-secao revelar">
+      <p class="rotulo">Para quem é</p>
+      <h2>Para quem construiu a empresa e hoje <em class="destaque">é o gargalo dela.</em></h2>
+      <p class="lead">Falo com o empresário, de dono para dono. Não com o departamento.</p>
+    </div>
+
+    <ul class="perfis">
+      {
+        perfis.map((p) => (
+          <li class="revelar">
+            <h3>{p.titulo}</h3>
+            <p>{p.texto}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="transformacao revelar">
+      <div class="coluna antes">
+        <p class="titulo-coluna">Antes</p>
+        <ul>{antes.map((i) => <li>{i}</li>)}</ul>
+      </div>
+      <div class="coluna depois">
+        <p class="titulo-coluna">Depois</p>
+        <ul>{depois.map((i) => <li>{i}</li>)}</ul>
+        <blockquote>“A empresa funciona sem mim, e eu finalmente posso pensar no futuro.”</blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .perfis {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1px;
+    background: var(--linha);
+    border: 1px solid var(--linha);
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+  .perfis li {
+    background: var(--creme);
+    padding: 2rem 1.75rem;
+  }
+  .perfis h3 {
+    font-size: 1.35rem;
+  }
+  .perfis p {
+    color: var(--texto-suave);
+    margin: 0;
+    font-size: 0.98rem;
+  }
+  .transformacao {
+    margin-top: clamp(3rem, 6vw, 5rem);
+    display: grid;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  @media (min-width: 768px) {
+    .transformacao {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .coluna {
+    padding: clamp(1.75rem, 4vw, 3rem);
+  }
+  .antes {
+    background: var(--creme-2);
+  }
+  .depois {
+    background: var(--petroleo);
+    color: var(--creme);
+  }
+  .titulo-coluna {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+  }
+  .depois .titulo-coluna {
+    color: var(--dourado);
+  }
+  .coluna ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.9rem;
+  }
+  .coluna li {
+    position: relative;
+    padding-left: 1.75rem;
+  }
+  .antes li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--texto-suave);
+  }
+  .depois li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--dourado);
+  }
+  blockquote {
+    margin: 2rem 0 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgb(232 217 187 / 0.2);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.35;
+    color: var(--areia);
+  }
+</style>

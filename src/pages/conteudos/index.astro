@@ -1,0 +1,91 @@
+---
+import Base from '../../layouts/Base.astro';
+import CabecalhoPagina from '../../components/CabecalhoPagina.astro';
+import CardArtigo from '../../components/CardArtigo.astro';
+import Ebook from '../../components/Ebook.astro';
+import { getCollection } from 'astro:content';
+
+const artigos = (await getCollection('artigos', ({ data }) => !data.rascunho)).sort(
+  (a, b) => b.data.data.valueOf() - a.data.data.valueOf(),
+);
+const categorias = [...new Set(artigos.map((a) => a.data.categoria))];
+---
+
+<Base titulo="Conteúdos" descricao="Artigos e vídeos de Raquel Araújo sobre estratégia, governança, gestão e sucessão para donos de empresa.">
+  <CabecalhoPagina rotulo="Conteúdos">
+    <Fragment slot="titulo">Para pensar a empresa <em class="destaque">de fora da operação.</em></Fragment>
+    <p>Artigos e vídeos sobre estratégia, governança e gestão, de dono para dono.</p>
+  </CabecalhoPagina>
+
+  <section class="secao">
+    <div class="container">
+      {
+        categorias.length > 1 && (
+          <div class="filtros" role="group" aria-label="Filtrar por categoria">
+            <button type="button" aria-pressed="true" data-cat="">Todos</button>
+            {categorias.map((c) => (
+              <button type="button" aria-pressed="false" data-cat={c}>
+                {c}
+              </button>
+            ))}
+          </div>
+        )
+      }
+      <div class="grade">
+        {
+          artigos.map((a) => (
+            <div data-categoria={a.data.categoria}>
+              <CardArtigo artigo={a} />
+            </div>
+          ))
+        }
+      </div>
+      <Ebook />
+    </div>
+  </section>
+</Base>
+
+<script>
+  const botoes = document.querySelectorAll<HTMLButtonElement>('[data-cat]');
+  botoes.forEach((b) =>
+    b.addEventListener('click', () => {
+      botoes.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      document.querySelectorAll<HTMLElement>('[data-categoria]').forEach((el) => {
+        el.hidden = !!b.dataset.cat && el.dataset.categoria !== b.dataset.cat;
+      });
+    }),
+  );
+</script>
+
+<style>
+  .filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  .filtros button {
+    min-height: 2.5rem;
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--linha);
+    border-radius: 999px;
+    background: transparent;
+    font: 500 0.9rem var(--sans);
+    color: var(--texto);
+    cursor: pointer;
+  }
+  .filtros button[aria-pressed='true'] {
+    background: var(--petroleo);
+    border-color: var(--petroleo);
+    color: var(--creme);
+  }
+  .grade {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+    margin-bottom: 3rem;
+  }
+  .grade > div {
+    display: grid;
+  }
+</style>

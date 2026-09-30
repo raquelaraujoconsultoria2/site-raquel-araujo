@@ -1,0 +1,71 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props {
+  artigo: CollectionEntry<'artigos'>;
+}
+const { artigo } = Astro.props;
+const { titulo, resumo, categoria, tipo, data } = artigo.data;
+const dataFmt = data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC' });
+---
+
+<article class="card">
+  <p class="meta">
+    <span>{tipo === 'video' ? 'Vídeo' : 'Artigo'} · {categoria}</span>
+    <time datetime={data.toISOString()}>{dataFmt}</time>
+  </p>
+  <h3><a href={`/conteudos/${artigo.id}`}>{titulo}</a></h3>
+  <p class="resumo">{resumo}</p>
+  <span class="link-seta" aria-hidden="true">{tipo === 'video' ? 'Assistir' : 'Ler'}</span>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    background: var(--branco);
+    border: 1px solid var(--linha);
+    border-radius: 6px;
+    transition:
+      border-color 0.2s,
+      transform 0.2s;
+  }
+  .card:hover {
+    border-color: var(--dourado);
+    transform: translateY(-2px);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dourado-escuro);
+  }
+  .meta time {
+    color: var(--texto-suave);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  h3 a {
+    text-decoration: none;
+  }
+  h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+  .resumo {
+    color: var(--texto-suave);
+    font-size: 0.97rem;
+    margin-bottom: 1.5rem;
+  }
+  .link-seta {
+    margin-top: auto;
+    align-self: flex-start;
+  }
+</style>

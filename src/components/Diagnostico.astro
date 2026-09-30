@@ -1,0 +1,276 @@
+---
+// Diagnóstico rápido: 4 perguntas, uma por vez, com leitura na hora.
+// Pontos: 0 (maduro) a 3 (depende do dono). Total de 0 a 12.
+const perguntas = [
+  {
+    texto: 'Se você ficar 30 dias fora, o que acontece com a empresa?',
+    opcoes: [
+      'Segue normal, com os gestores decidindo',
+      'Segue, mas as decisões importantes esperam por mim',
+      'Muita coisa trava até eu voltar',
+      'Nem consigo imaginar ficar 30 dias fora',
+    ],
+  },
+  {
+    texto: 'Como as decisões são tomadas hoje?',
+    opcoes: [
+      'Com indicadores acompanhados em rotina',
+      'Com alguns números, mas muito na intuição',
+      'Na experiência e no feeling do dono',
+      'No calor do problema, apagando incêndio',
+    ],
+  },
+  {
+    texto: 'Comercial, operação, financeiro e marketing trabalham…',
+    opcoes: [
+      'Conectados, com metas que conversam entre si',
+      'Cada área bem, mas no seu próprio mundo',
+      'Desconectados, e eu faço a ponte entre eles',
+      'Em conflito frequente',
+    ],
+  },
+  {
+    texto: 'Existe um plano para os próximos 2 a 3 anos, com metas e responsáveis?',
+    opcoes: [
+      'Sim, escrito e acompanhado',
+      'Existe, mas ficou no papel',
+      'Está na minha cabeça',
+      'Não, o dia a dia não deixa',
+    ],
+  },
+];
+
+const leituras = [
+  {
+    ate: 3,
+    titulo: 'Sua empresa já tem método.',
+    texto:
+      'Há rotina, dados e gente decidindo. O próximo passo é proteger isso: governança, papel claro dos sócios e visão de longo prazo para a empresa durar e valer mais.',
+    passo: 'Conselho consultivo e governança',
+  },
+  {
+    ate: 7,
+    titulo: 'A empresa cresce, mas ainda se apoia em você.',
+    texto:
+      'Existe estrutura, mas o plano não chega até a ponta. Falta desdobrar as metas por área e criar a rotina de acompanhamento que faz os gestores decidirem sem você.',
+    passo: 'Desdobramento de metas e rotina de gestão',
+  },
+  {
+    ate: 12,
+    titulo: 'Hoje, você é o gargalo da sua empresa.',
+    texto:
+      'Se tudo passa por você, o crescimento para onde a sua agenda acaba. Isso é comum e tem saída: começar pelo diagnóstico com dados e montar uma rotina que tire você da operação.',
+    passo: 'Diagnóstico e consultoria estratégica com acompanhamento',
+  },
+];
+---
+
+<section class="secao secao--clara" id="diagnostico">
+  <div class="container grade">
+    <div class="cabecalho-secao">
+      <p class="rotulo">Diagnóstico rápido</p>
+      <h2>Sua empresa funciona <em class="destaque">sem você?</em></h2>
+      <p class="lead">Quatro perguntas, menos de um minuto. A leitura aparece na hora, sem cadastro.</p>
+    </div>
+
+    <div class="quiz" data-quiz data-leituras={JSON.stringify(leituras)}>
+      <div class="progresso" aria-hidden="true"><span data-barra></span></div>
+
+      {
+        perguntas.map((p, i) => (
+          <fieldset class="passo" data-passo={i} hidden={i > 0}>
+            <legend>
+              <span class="contador">
+                Pergunta {i + 1} de {perguntas.length}
+              </span>
+              {p.texto}
+            </legend>
+            <div class="opcoes">
+              {p.opcoes.map((o, pontos) => (
+                <button type="button" class="opcao" data-pontos={pontos}>
+                  {o}
+                </button>
+              ))}
+            </div>
+            {i > 0 && (
+              <button type="button" class="voltar" data-voltar>
+                ← Voltar
+              </button>
+            )}
+          </fieldset>
+        ))
+      }
+
+      <div class="resultado" data-resultado hidden tabindex="-1" aria-live="polite">
+        <p class="contador">Sua leitura</p>
+        <h3 data-titulo></h3>
+        <p data-texto></p>
+        <p class="passo-sugerido">Por onde começar: <strong data-passo-sugerido></strong></p>
+        <div class="acoes">
+          <a href="#agendar" class="btn btn--primario">Conversar sobre o resultado</a>
+          <button type="button" class="btn btn--contorno" data-refazer>Refazer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  type Leitura = { ate: number; titulo: string; texto: string; passo: string };
+
+  document.querySelectorAll<HTMLElement>('[data-quiz]').forEach((quiz) => {
+    const leituras: Leitura[] = JSON.parse(quiz.dataset.leituras!);
+    const passos = [...quiz.querySelectorAll<HTMLElement>('[data-passo]')];
+    const resultado = quiz.querySelector<HTMLElement>('[data-resultado]')!;
+    const barra = quiz.querySelector<HTMLElement>('[data-barra]')!;
+    const respostas: number[] = [];
+    let atual = 0;
+
+    const mostrar = (i: number) => {
+      atual = i;
+      passos.forEach((p, j) => (p.hidden = j !== i));
+      resultado.hidden = i < passos.length;
+      barra.style.width = `${(i / passos.length) * 100}%`;
+    };
+
+    const concluir = () => {
+      const total = respostas.reduce((a, b) => a + b, 0);
+      const l = leituras.find((x) => total <= x.ate)!;
+      quiz.querySelector('[data-titulo]')!.textContent = l.titulo;
+      quiz.querySelector('[data-texto]')!.textContent = l.texto;
+      quiz.querySelector('[data-passo-sugerido]')!.textContent = l.passo;
+      mostrar(passos.length);
+      resultado.focus({ preventScroll: true });
+      // Leva a leitura para o formulário de contato
+      const campo = document.querySelector<HTMLInputElement>('input[name="diagnostico"]');
+      if (campo) campo.value = `${l.titulo} (${total}/12)`;
+      (window as any).gtag?.('event', 'diagnostico_concluido', { pontuacao: total });
+    };
+
+    passos.forEach((passo, i) => {
+      passo.querySelectorAll<HTMLButtonElement>('[data-pontos]').forEach((b) =>
+        b.addEventListener('click', () => {
+          respostas[i] = Number(b.dataset.pontos);
+          if (i + 1 < passos.length) {
+            mostrar(i + 1);
+            passos[i + 1].querySelector<HTMLButtonElement>('.opcao')?.focus({ preventScroll: true });
+          } else concluir();
+        }),
+      );
+      passo.querySelector('[data-voltar]')?.addEventListener('click', () => mostrar(i - 1));
+    });
+
+    quiz.querySelector('[data-refazer]')!.addEventListener('click', () => {
+      respostas.length = 0;
+      mostrar(0);
+    });
+  });
+</script>
+
+<style>
+  .grade {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 1024px) {
+    .grade {
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+  }
+  .quiz {
+    position: relative;
+    background: var(--creme);
+    border: 1px solid var(--linha);
+    border-radius: 6px;
+    padding: clamp(1.5rem, 4vw, 2.75rem);
+    min-height: 26rem;
+  }
+  .progresso {
+    height: 2px;
+    background: var(--linha);
+    margin-bottom: 2rem;
+  }
+  .progresso span {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--dourado);
+    transition: width 0.4s ease;
+  }
+  fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+  }
+  legend {
+    font-family: var(--serif);
+    font-size: clamp(1.4rem, 2.6vw, 1.85rem);
+    line-height: 1.25;
+    color: var(--petroleo);
+    margin-bottom: 1.5rem;
+    padding: 0;
+  }
+  .contador {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dourado-escuro);
+    margin-bottom: 0.75rem;
+  }
+  .opcoes {
+    display: grid;
+    gap: 0.6rem;
+  }
+  .opcao {
+    text-align: left;
+    padding: 1rem 1.25rem;
+    min-height: 3.25rem;
+    background: var(--branco);
+    border: 1px solid var(--linha);
+    border-radius: var(--raio);
+    font: 500 1rem/1.4 var(--sans);
+    color: var(--texto);
+    cursor: pointer;
+    transition:
+      border-color 0.2s,
+      background 0.2s;
+  }
+  .opcao:hover {
+    border-color: var(--petroleo);
+  }
+  .opcao:active {
+    background: var(--areia);
+  }
+  .voltar {
+    margin-top: 1.25rem;
+    background: none;
+    border: 0;
+    padding: 0.5rem 0;
+    font: 500 0.9rem var(--sans);
+    color: var(--texto-suave);
+    cursor: pointer;
+  }
+  .resultado {
+    outline: none;
+  }
+  .resultado h3 {
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+  }
+  .passo-sugerido {
+    padding: 1rem 1.25rem;
+    border-left: 2px solid var(--dourado);
+    background: var(--branco);
+  }
+  .acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+  }
+</style>

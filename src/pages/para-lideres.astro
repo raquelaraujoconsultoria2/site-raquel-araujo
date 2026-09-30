@@ -1,0 +1,141 @@
+---
+import Base from '../layouts/Base.astro';
+import CabecalhoPagina from '../components/CabecalhoPagina.astro';
+import ChamadaFinal from '../components/ChamadaFinal.astro';
+import { Picture } from 'astro:assets';
+import foto from '../assets/fotos/raquel-6711.jpg';
+import foto2 from '../assets/fotos/raquel-6586.jpg';
+
+const perfis = [
+  { t: 'Sucessores', d: 'Que vão assumir, ou já assumiram, a empresa da família e precisam conquistar autoridade sem apagar o que deu certo.' },
+  { t: 'Gestores promovidos', d: 'Que eram os melhores na execução e agora precisam liderar pessoas, inclusive ex-colegas.' },
+  { t: 'Diretores e CEOs', d: 'Que respondem por resultado e precisam de alguém de fora, com experiência de dentro, para pensar junto.' },
+];
+const temas = [
+  'Sair da execução e passar a cobrar resultado',
+  'Delegar sem perder o controle',
+  'Conduzir reuniões de resultado que geram decisão',
+  'Formar o time que vai substituir você',
+  'Lidar com sócios, conselho e família',
+  'Tomar decisões difíceis com dados, e não no calor do momento',
+];
+---
+
+<Base
+  titulo="Para líderes"
+  descricao="Mentoria individual para sucessores, gestores, diretores e CEOs que precisam liderar com consistência e método."
+>
+  <CabecalhoPagina rotulo="Para líderes" foto={foto} alt="Raquel Araújo em pé, de blazer, em frente a uma parede de vidro">
+    <Fragment slot="titulo">Liderar é outra função, <em class="destaque">não mais do mesmo.</em></Fragment>
+    <p>
+      Mentoria individual para quem passou a responder por mais do que o cargo antigo exigia e quer evoluir na
+      prática, fortalecer o time e liderar com consistência.
+    </p>
+  </CabecalhoPagina>
+
+  <section class="secao">
+    <div class="container">
+      <div class="cabecalho-secao">
+        <p class="rotulo">Para quem é</p>
+        <h2>Para quem está no meio da travessia.</h2>
+      </div>
+      <ul class="perfis">
+        {
+          perfis.map((p) => (
+            <li>
+              <h3>{p.t}</h3>
+              <p>{p.d}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="secao secao--clara">
+    <div class="container grade">
+      <figure>
+        <Picture src={foto2} alt="Raquel Araújo trabalhando em sua mesa, olhando pela janela" widths={[480, 720, 960]} sizes="(min-width: 900px) 440px, 100vw" formats={['avif', 'webp']} />
+      </figure>
+      <div>
+        <p class="rotulo">Como funciona</p>
+        <h2>Casos reais, <em class="destaque">do seu dia a dia.</em></h2>
+        <p>
+          A mentoria é feita em encontros individuais, com periodicidade combinada. Partimos das situações que você
+          está vivendo agora, não de teoria, e montamos juntos um plano de desenvolvimento com o que precisa mudar
+          na sua forma de liderar.
+        </p>
+        <p>Alguns temas que costumam aparecer:</p>
+        <ul class="temas">
+          {temas.map((t) => <li>{t}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <ChamadaFinal titulo="Vamos conversar sobre o seu momento?" texto="Conte o desafio que você está vivendo como líder. A primeira conversa é sem compromisso." />
+</Base>
+
+<style>
+  .perfis {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  }
+  .perfis li {
+    padding: 2rem;
+    border-top: 2px solid var(--dourado);
+    background: var(--branco);
+  }
+  .perfis p {
+    color: var(--texto-suave);
+    margin: 0;
+  }
+  .grade {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .grade {
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 5rem;
+    }
+  }
+  figure {
+    margin: 0;
+    max-width: 440px;
+  }
+  figure :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 2px;
+  }
+  .grade p {
+    color: var(--texto-suave);
+  }
+  .temas {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .temas li {
+    padding-left: 1.5rem;
+    position: relative;
+  }
+  .temas li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.75em;
+    width: 0.75rem;
+    height: 1px;
+    background: var(--dourado);
+  }
+</style>

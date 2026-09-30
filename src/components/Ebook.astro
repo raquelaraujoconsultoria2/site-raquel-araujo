@@ -1,0 +1,82 @@
+---
+// Captura de contato para o material gratuito (Netlify Forms: "ebook").
+// PENDENTE: título e arquivo do e-book. Enquanto não existir, funciona como lista de espera.
+---
+
+<div class="ebook">
+  <div>
+    <p class="rotulo">Material gratuito</p>
+    <h3>As fases do crescimento: o que muda na empresa e no papel do sócio</h3>
+    <p>Um guia direto para identificar em que fase sua empresa está e o que precisa mudar para chegar à próxima. Deixe seu e-mail e receba assim que for lançado.</p>
+  </div>
+  <form name="ebook" method="POST" action="/obrigado?origem=ebook" data-netlify="true" netlify-honeypot="empresa-site">
+    <input type="hidden" name="form-name" value="ebook" />
+    <p class="sr-only"><label>Não preencha: <input name="empresa-site" tabindex="-1" autocomplete="off" /></label></p>
+    <label>
+      <span class="sr-only">Nome</span>
+      <input type="text" name="nome" placeholder="Seu nome" autocomplete="name" required />
+    </label>
+    <label>
+      <span class="sr-only">E-mail</span>
+      <input type="email" name="email" placeholder="Seu melhor e-mail" autocomplete="email" required />
+    </label>
+    <label class="consentimento">
+      <input type="checkbox" name="consentimento" value="sim" required />
+      <span>Aceito receber conteúdos por e-mail. <a href="/privacidade">Privacidade</a></span>
+    </label>
+    <button class="btn btn--dourado" type="submit">Quero receber</button>
+  </form>
+</div>
+
+<style>
+  .ebook {
+    display: grid;
+    gap: 2rem;
+    padding: clamp(1.75rem, 4vw, 3rem);
+    background: var(--petroleo);
+    color: rgb(245 243 238 / 0.8);
+    border-radius: 6px;
+  }
+  @media (min-width: 900px) {
+    .ebook {
+      grid-template-columns: 1.2fr 1fr;
+      align-items: center;
+      gap: 4rem;
+    }
+  }
+  .rotulo {
+    color: var(--dourado);
+  }
+  h3 {
+    color: var(--creme);
+    font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+  }
+  form {
+    display: grid;
+    gap: 0.75rem;
+  }
+  input[type='text'],
+  input[type='email'] {
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0.8rem 1rem;
+    border: 1px solid rgb(232 217 187 / 0.3);
+    border-radius: var(--raio);
+    background: rgb(255 255 255 / 0.06);
+    color: var(--creme);
+    font: 1rem var(--sans);
+  }
+  input::placeholder {
+    color: rgb(245 243 238 / 0.5);
+  }
+  .consentimento {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    font-size: 0.85rem;
+  }
+  .consentimento input {
+    margin-top: 0.3rem;
+    accent-color: var(--dourado);
+  }
+</style>

@@ -1,0 +1,107 @@
+---
+import '../styles/global.css';
+import { SITE } from '../config';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFlutuante from '../components/WhatsAppFlutuante.astro';
+import AvisoCookies from '../components/AvisoCookies.astro';
+import { getImage } from 'astro:assets';
+import fotoOg from '../assets/fotos/raquel-6473.jpg';
+
+interface Props {
+  titulo?: string;
+  descricao?: string;
+  imagem?: ImageMetadata;
+  semIndex?: boolean;
+  tipo?: 'website' | 'article';
+}
+
+const { titulo, descricao = SITE.descricao, imagem = fotoOg, semIndex = false, tipo = 'website' } = Astro.props;
+const tituloCompleto = titulo ? `${titulo} | ${SITE.nome}` : `${SITE.nome} | ${SITE.assinatura}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const og = await getImage({ src: imagem, width: 1200, height: 630, fit: 'cover', position: 'top', format: 'jpg' });
+const ogUrl = new URL(og.src, Astro.site);
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <script is:inline>document.documentElement.classList.add("js")</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descricao} />
+    <link rel="canonical" href={canonical} />
+    {semIndex && <meta name="robots" content="noindex" />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#132F33" />
+
+    <meta property="og:type" content={tipo} />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content={SITE.nome} />
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'ProfessionalService',
+        name: `${SITE.nome} — Consultoria`,
+        description: SITE.descricao,
+        url: SITE.url,
+        image: ogUrl.href,
+        email: SITE.email,
+        areaServed: 'BR',
+        founder: { '@type': 'Person', name: SITE.nome, jobTitle: 'Conselheira e estrategista' },
+      })}
+    />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+    <Header />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Footer />
+    <WhatsAppFlutuante />
+    <AvisoCookies />
+
+    <script>
+      const io = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('visivel');
+              io.unobserve(e.target);
+            }
+          }),
+        { rootMargin: '0px 0px -8% 0px' },
+      );
+      document.querySelectorAll('.revelar').forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
+
+<style>
+  .pular {
+    position: absolute;
+    left: 1rem;
+    top: -3rem;
+    z-index: 100;
+    background: var(--petroleo);
+    color: var(--creme);
+    padding: 0.6rem 1rem;
+    border-radius: var(--raio);
+  }
+  .pular:focus {
+    top: 1rem;
+  }
+</style>

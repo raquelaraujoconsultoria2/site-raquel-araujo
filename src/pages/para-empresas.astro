@@ -1,0 +1,249 @@
+---
+import Base from '../layouts/Base.astro';
+import CabecalhoPagina from '../components/CabecalhoPagina.astro';
+import Metodo from '../components/Metodo.astro';
+import ChamadaFinal from '../components/ChamadaFinal.astro';
+import { SERVICOS, FASES } from '../data';
+import foto from '../assets/fotos/raquel-6220.jpg';
+
+const sinais = [
+  'Os problemas chegam todos na sua mesa, e você não consegue tirar férias de verdade.',
+  'A empresa cresce, mas a margem e a organização não acompanham.',
+  'Comercial, operação e financeiro trabalham cada um no seu mundo.',
+  'Existe um plano, mas ele não chega até quem executa.',
+  'Os sócios pensam diferente sobre o futuro, e isso ainda não foi conversado.',
+  'A sucessão é um assunto que todo mundo sabe que existe e ninguém coloca na mesa.',
+];
+
+const detalhes: Record<string, string[]> = {
+  consultoria: [
+    'É o trabalho completo. Começa ouvindo o dono e os sócios, passa por um diagnóstico com números e termina quando a empresa tem um plano com poucas prioridades, metas desdobradas por área e uma rotina de gestão rodando.',
+    'A diferença está no final: não entrego um relatório e vou embora. Acompanho as reuniões de resultado, os indicadores e os planos de ação até o método virar hábito da equipe.',
+  ],
+  conselho: [
+    'Para empresas que já têm alguma estrutura e querem uma visão de fora nas decisões que importam: investimentos, expansão, pessoas-chave, sociedade.',
+    'Reuniões periódicas com o dono e os sócios, olhando indicadores, cobrando o que foi combinado e ajudando a pensar o próximo passo. É ter um conselheiro que já sentou do seu lado da mesa.',
+  ],
+  governanca: [
+    'Tudo começa pela governança: é ela que pensa a estratégia para o negócio durar. Em empresas familiares e com mais de um sócio, isso significa separar o que é família, o que é sociedade e o que é gestão.',
+    'O trabalho define o papel de cada sócio, cria os fóruns certos para cada tipo de decisão e prepara a sucessão com tempo, para o próximo ciclo começar sem ruptura.',
+  ],
+};
+const servicos = SERVICOS.filter((s) => s.publico === 'empresas');
+---
+
+<Base
+  titulo="Para empresas"
+  descricao="Consultoria estratégica com acompanhamento, conselho consultivo e governança familiar e societária para pequenas e médias empresas."
+>
+  <CabecalhoPagina rotulo="Para empresas" foto={foto} alt="Raquel Araújo em sua mesa, segurando uma xícara de café">
+    <Fragment slot="titulo">Empresas que crescem <em class="destaque">sem depender do dono.</em></Fragment>
+    <p>
+      Estratégia, governança e rotina de gestão para pequenas e médias empresas, com o olhar de quem construiu uma
+      empresa do zero e hoje senta no conselho dela.
+    </p>
+  </CabecalhoPagina>
+
+  <section class="secao">
+    <div class="container sinais-grade">
+      <div class="cabecalho-secao">
+        <p class="rotulo">Sinais de que é hora</p>
+        <h2>Se você se reconheceu em <em class="destaque">dois ou mais</em>, vale conversar.</h2>
+      </div>
+      <ul class="sinais">
+        {sinais.map((s) => <li>{s}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="secao secao--clara">
+    <div class="container">
+      <div class="cabecalho-secao">
+        <p class="rotulo">Como posso ajudar</p>
+        <h2>Três formas de trabalhar juntos.</h2>
+      </div>
+      <div class="servicos">
+        {
+          servicos.map((s, i) => (
+            <article id={s.id} class="servico">
+              <div>
+                <span class="num">0{i + 1}</span>
+                <h3>{s.titulo}</h3>
+                <ul>
+                  {s.itens.map((it) => (
+                    <li>{it}</li>
+                  ))}
+                </ul>
+              </div>
+              <div class="texto">
+                {detalhes[s.id].map((p) => (
+                  <p>{p}</p>
+                ))}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" id="fases">
+    <div class="container">
+      <div class="cabecalho-secao">
+        <p class="rotulo">As fases do crescimento</p>
+        <h2>Cada fase pede uma empresa diferente <em class="destaque">e um sócio diferente.</em></h2>
+        <p class="lead">
+          O que funcionou para chegar até aqui raramente é o que leva ao próximo nível. Saber em que fase a empresa
+          está é o primeiro passo para saber o que precisa mudar, inclusive no seu papel.
+        </p>
+      </div>
+      <ol class="fases">
+        {
+          FASES.map((f, i) => (
+            <li>
+              <span class="num">{i + 1}</span>
+              <h3>{f.nome}</h3>
+              <p class="mini">A empresa</p>
+              <p>{f.empresa}</p>
+              <p class="mini">O papel do sócio</p>
+              <p class="socio">{f.socio}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <Metodo />
+  <ChamadaFinal />
+</Base>
+
+<style>
+  .sinais-grade {
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 1024px) {
+    .sinais-grade {
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 5rem;
+    }
+  }
+  .sinais {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .sinais li {
+    padding: 1.1rem 0 1.1rem 2rem;
+    border-bottom: 1px solid var(--linha);
+    position: relative;
+    font-size: 1.05rem;
+  }
+  .sinais li:first-child {
+    border-top: 1px solid var(--linha);
+  }
+  .sinais li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--dourado);
+  }
+  .servicos {
+    display: grid;
+  }
+  .servico {
+    display: grid;
+    gap: 1.5rem;
+    padding-block: clamp(2rem, 4vw, 3rem);
+    border-top: 1px solid var(--linha);
+    scroll-margin-top: 6rem;
+  }
+  @media (min-width: 900px) {
+    .servico {
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 5rem;
+    }
+  }
+  .num {
+    font-family: var(--serif);
+    color: var(--dourado);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .servico h3 {
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+  }
+  .servico ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.4rem;
+    font-size: 0.95rem;
+    color: var(--texto-suave);
+  }
+  .servico ul li::before {
+    content: '— ';
+    color: var(--dourado);
+  }
+  .texto p {
+    color: var(--texto-suave);
+  }
+  .fases {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+  }
+  @media (min-width: 1024px) {
+    .fases {
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      border-top: 2px solid var(--petroleo);
+    }
+    .fases li {
+      border-right: 1px solid var(--linha);
+    }
+    .fases li:last-child {
+      border-right: 0;
+    }
+  }
+  .fases li {
+    padding: 1.75rem 1.5rem;
+    background: var(--branco);
+  }
+  @media (max-width: 1023px) {
+    .fases li {
+      border-left: 2px solid var(--petroleo);
+    }
+  }
+  .fases li:nth-child(n + 3) {
+    background: var(--creme-2);
+  }
+  .fases .num {
+    font-size: 2rem;
+    line-height: 1;
+  }
+  .fases h3 {
+    font-size: 1.3rem;
+  }
+  .fases p {
+    font-size: 0.93rem;
+    color: var(--texto-suave);
+  }
+  .fases .mini {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dourado-escuro);
+    margin-bottom: 0.3rem;
+  }
+  .fases .socio {
+    color: var(--petroleo);
+    font-weight: 500;
+    margin-bottom: 0;
+  }
+</style>

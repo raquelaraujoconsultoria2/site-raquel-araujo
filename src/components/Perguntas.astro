@@ -1,0 +1,115 @@
+---
+const perguntas = [
+  {
+    p: 'Para que tamanho de empresa é o seu trabalho?',
+    r: 'Pequenas e médias empresas, geralmente com dono ou sócios ainda muito presentes na operação. O mais importante não é o tamanho, é o momento: a empresa cresceu e a forma de gerir não acompanhou.',
+  },
+  {
+    p: 'Você entrega um relatório e vai embora?',
+    r: 'Não. O diagnóstico e o plano são o começo. O trabalho segue até as metas estarem desdobradas por área e a rotina de gestão estar rodando, com indicadores e reuniões de acompanhamento.',
+  },
+  {
+    p: 'Preciso ter os números organizados para começar?',
+    r: 'Não. Organizar os dados faz parte do diagnóstico. Trabalhamos com o que existe e, no caminho, montamos os indicadores que a empresa precisa acompanhar.',
+  },
+  {
+    p: 'Qual a diferença entre consultoria, conselho consultivo e mentoria?',
+    r: 'A consultoria implanta o método na empresa, com começo, meio e resultado. O conselho consultivo é um acompanhamento estratégico recorrente do dono e dos sócios. A mentoria é individual, para líderes e sucessores que estão assumindo mais responsabilidade.',
+  },
+  {
+    p: 'Quanto tempo dura o trabalho?',
+    r: 'Depende do momento da empresa e do que o diagnóstico mostrar. O prazo e as entregas de cada etapa ficam definidos na proposta, antes de começar.',
+  },
+  {
+    p: 'Como funciona a primeira conversa?',
+    r: 'É uma conversa de contexto, sem compromisso. Você conta o momento da empresa, eu faço perguntas e, no fim, dizemos com franqueza se faz sentido trabalharmos juntos e por onde começar.',
+  },
+  {
+    p: 'As informações da minha empresa ficam em sigilo?',
+    r: 'Sim. O trabalho é próximo e confidencial. Números, pessoas e decisões discutidas ficam entre nós.',
+  },
+];
+---
+
+<section class="secao" id="perguntas">
+  <div class="container grade">
+    <div class="cabecalho-secao revelar">
+      <p class="rotulo">Perguntas frequentes</p>
+      <h2>Antes de <em class="destaque">conversarmos.</em></h2>
+    </div>
+    <div class="lista revelar">
+      {
+        perguntas.map((q) => (
+          <details>
+            <summary>{q.p}</summary>
+            <p>{q.r}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: perguntas.map((q) => ({
+      '@type': 'Question',
+      name: q.p,
+      acceptedAnswer: { '@type': 'Answer', text: q.r },
+    })),
+  })}
+/>
+
+<style>
+  .grade {
+    display: grid;
+  }
+  @media (min-width: 1024px) {
+    .grade {
+      grid-template-columns: 0.7fr 1.3fr;
+      gap: 5rem;
+    }
+  }
+  details {
+    border-bottom: 1px solid var(--linha);
+  }
+  details:first-child {
+    border-top: 1px solid var(--linha);
+  }
+  summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.4rem 0;
+    font-family: var(--serif);
+    font-size: clamp(1.15rem, 2vw, 1.35rem);
+    color: var(--petroleo);
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary::after {
+    content: '+';
+    flex: none;
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--dourado);
+    transition: transform 0.25s;
+  }
+  details[open] summary::after {
+    transform: rotate(45deg);
+  }
+  details p {
+    color: var(--texto-suave);
+    padding-bottom: 1.5rem;
+    margin: 0;
+    max-width: 42rem;
+  }
+</style>

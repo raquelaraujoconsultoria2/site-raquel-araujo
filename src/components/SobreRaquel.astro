@@ -1,0 +1,81 @@
+---
+import { Picture } from 'astro:assets';
+import foto from '../assets/fotos/raquel-6439.jpg';
+---
+
+<section class="secao" id="quem-sou">
+  <div class="container grade">
+    <figure class="foto revelar">
+      <Picture
+        src={foto}
+        alt="Raquel Araújo sentada em uma poltrona, segurando os óculos"
+        widths={[480, 720, 1024]}
+        sizes="(min-width: 1024px) 460px, 100vw"
+        formats={['avif', 'webp']}
+      />
+    </figure>
+    <div class="texto revelar">
+      <p class="rotulo">Quem vai te acompanhar</p>
+      <h2>Raquel Araújo</h2>
+      <p class="lead">Empresária antes de ser consultora. Já estive exatamente onde você está.</p>
+      <p>
+        Ajudei a construir uma empresa do zero até a liderança nacional no seu segmento, a American Burrs. Vivi cada
+        fase do crescimento: o começo em que o dono faz tudo, a tração que atropela a estrutura, o momento em que
+        “se eu não estiver, nada acontece”.
+      </p>
+      <p>
+        Hoje estou do outro lado da mesa. Sou conselheira da empresa e ajudo outros donos a crescer com método,
+        conectando áreas, colocando números na conversa e acompanhando até a rotina de gestão andar sozinha.
+      </p>
+      <blockquote>
+        “A experiência só se transforma em valor quando encontra espaço para ser compartilhada.”
+      </blockquote>
+      <p class="formacao">Conselheira · Estrategista · Formação em Direito</p>
+      <a class="link-seta" href="/biografia">Conheça a trajetória completa</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .grade {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .grade {
+      grid-template-columns: 0.8fr 1.2fr;
+    }
+  }
+  .foto {
+    margin: 0;
+    max-width: 460px;
+  }
+  .foto :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 20%;
+    border-radius: 2px;
+  }
+  .texto > p:not(.lead):not(.rotulo) {
+    color: var(--texto-suave);
+  }
+  blockquote {
+    margin: 2rem 0;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--dourado);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+    line-height: 1.35;
+    color: var(--petroleo);
+  }
+  .formacao {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+</style>

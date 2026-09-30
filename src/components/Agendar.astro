@@ -1,0 +1,263 @@
+---
+import { SITE, whatsappUrl } from '../config';
+import { FAIXAS_FATURAMENTO } from '../data';
+const wa = whatsappUrl();
+---
+
+<section class="secao secao--clara" id="agendar">
+  <div class="container">
+    <div class="cabecalho-secao revelar">
+      <p class="rotulo">Agendar conversa</p>
+      <h2>Quer saber se faz sentido <em class="destaque">para a sua empresa?</em></h2>
+      <p class="lead">
+        A primeira conversa é para entender o seu momento e ver, com honestidade, se e como posso ajudar. Sem
+        compromisso.
+      </p>
+    </div>
+
+    <div class:list={['grade', { 'sem-agenda': !SITE.cal }]}>
+      {
+        SITE.cal && (
+          <div class="agenda revelar">
+            <h3>Escolha um horário</h3>
+            <div id="cal-inline" class="cal" data-cal={SITE.cal} />
+          </div>
+        )
+      }
+
+      {
+        !SITE.cal && (
+          <aside class="depois revelar">
+            <h3>O que acontece depois</h3>
+            <ol>
+              <li><strong>Eu leio pessoalmente</strong> a sua mensagem, sem triagem de terceiros.</li>
+              <li><strong>Entro em contato</strong> pelo WhatsApp ou e-mail para marcar um horário.</li>
+              <li><strong>Conversamos sobre o momento</strong> da empresa e dizemos com franqueza se faz sentido seguir juntos.</li>
+            </ol>
+          </aside>
+        )
+      }
+
+      <form
+        class="formulario revelar"
+        name="contato"
+        method="POST"
+        action="/obrigado"
+        data-netlify="true"
+        netlify-honeypot="empresa-site"
+      >
+        <h3>{SITE.cal ? 'Prefere que eu entre em contato?' : 'Conte um pouco sobre a sua empresa'}</h3>
+        <input type="hidden" name="form-name" value="contato" />
+        <input type="hidden" name="diagnostico" value="" />
+        <p class="sr-only"><label>Não preencha: <input name="empresa-site" tabindex="-1" autocomplete="off" /></label></p>
+
+        <div class="campos">
+          <label>
+            <span>Nome</span>
+            <input type="text" name="nome" autocomplete="name" required />
+          </label>
+          <label>
+            <span>Empresa</span>
+            <input type="text" name="empresa" autocomplete="organization" required />
+          </label>
+          <label>
+            <span>Seu papel na empresa</span>
+            <select name="papel" required>
+              <option value="" disabled selected>Selecione</option>
+              <option>Dono / fundador</option>
+              <option>Sócio</option>
+              <option>Sucessor</option>
+              <option>Diretor / gestor</option>
+              <option>Outro</option>
+            </select>
+          </label>
+          <label>
+            <span>Faturamento anual</span>
+            <select name="faturamento" required>
+              <option value="" disabled selected>Selecione a faixa</option>
+              {FAIXAS_FATURAMENTO.map((f) => <option>{f}</option>)}
+            </select>
+          </label>
+          <label>
+            <span>E-mail</span>
+            <input type="email" name="email" autocomplete="email" required />
+          </label>
+          <label>
+            <span>WhatsApp</span>
+            <input type="tel" name="telefone" autocomplete="tel" inputmode="tel" placeholder="(00) 00000-0000" required />
+          </label>
+          <label class="inteiro">
+            <span>Qual é o principal desafio da empresa hoje?</span>
+            <textarea name="desafio" rows="4"></textarea>
+          </label>
+        </div>
+
+        <label class="consentimento">
+          <input type="checkbox" name="consentimento" value="sim" required />
+          <span>Autorizo o contato e o uso destes dados conforme a <a href="/privacidade">política de privacidade</a>.</span>
+        </label>
+
+        <button class="btn btn--primario" type="submit">Enviar</button>
+        {
+          wa && (
+            <p class="alternativa">
+              Prefere falar agora? <a href={wa} target="_blank" rel="noopener">Chamar no WhatsApp</a>
+            </p>
+          )
+        }
+      </form>
+    </div>
+  </div>
+</section>
+
+{
+  SITE.cal && (
+    <script is:inline>
+      (function (C, A, L) {
+        var p = function (a, ar) { a.q.push(ar); };
+        var d = C.document;
+        C.Cal = C.Cal || function () {
+          var cal = C.Cal; var ar = arguments;
+          if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement('script')).src = A; cal.loaded = true; }
+          if (ar[0] === L) { var api = function () { p(api, arguments); }; var namespace = ar[1]; api.q = api.q || [];
+            if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]); } else p(cal, ar); return; }
+          p(cal, ar);
+        };
+      })(window, 'https://app.cal.com/embed/embed.js', 'init');
+      var el = document.getElementById('cal-inline');
+      Cal('init', { origin: 'https://cal.com' });
+      Cal('inline', { elementOrSelector: '#cal-inline', calLink: el.dataset.cal, config: { layout: 'month_view' } });
+      Cal('ui', { theme: 'light', cssVarsPerTheme: { light: { 'cal-brand': '#132F33' } }, hideEventTypeDetails: false });
+    </script>
+  )
+}
+
+<style>
+  .grade {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 1024px) {
+    .grade:not(.sem-agenda) {
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: start;
+    }
+  }
+  @media (min-width: 1024px) {
+    .sem-agenda {
+      grid-template-columns: 0.75fr 1.25fr;
+      gap: 4rem;
+      align-items: start;
+    }
+  }
+  .depois ol {
+    list-style: none;
+    counter-reset: passo;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.5rem;
+  }
+  .depois li {
+    counter-increment: passo;
+    position: relative;
+    padding-left: 3rem;
+    color: var(--texto-suave);
+  }
+  .depois li::before {
+    content: counter(passo, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: -0.1rem;
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    color: var(--dourado);
+  }
+  .depois strong {
+    color: var(--texto);
+    font-weight: 600;
+  }
+  .cal {
+    min-height: 34rem;
+    overflow: auto;
+  }
+  .agenda,
+  .formulario {
+    background: var(--creme);
+    border: 1px solid var(--linha);
+    border-radius: 6px;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+  }
+  .campos {
+    display: grid;
+    gap: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .campos {
+      grid-template-columns: 1fr 1fr;
+    }
+    .inteiro {
+      grid-column: 1 / -1;
+    }
+  }
+  label > span {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+  }
+  input:not([type='checkbox']),
+  select,
+  textarea {
+    width: 100%;
+    min-height: 3.1rem;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--linha);
+    border-radius: var(--raio);
+    background: var(--branco);
+    font: 1rem var(--sans);
+    color: var(--texto);
+  }
+  textarea {
+    resize: vertical;
+  }
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--petroleo);
+    outline: 2px solid rgb(184 149 90 / 0.35);
+    outline-offset: 0;
+  }
+  .consentimento {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    font-size: 0.88rem;
+    color: var(--texto-suave);
+    margin-bottom: 1.5rem;
+  }
+  .consentimento span {
+    font-weight: 400;
+    font-size: inherit;
+    display: inline;
+    margin: 0;
+  }
+  .consentimento input {
+    margin-top: 0.3rem;
+    accent-color: var(--petroleo);
+  }
+  .formulario .btn {
+    width: 100%;
+  }
+  @media (min-width: 640px) {
+    .formulario .btn {
+      width: auto;
+    }
+  }
+  .alternativa {
+    margin: 1.25rem 0 0;
+    font-size: 0.92rem;
+    color: var(--texto-suave);
+  }
+</style>
