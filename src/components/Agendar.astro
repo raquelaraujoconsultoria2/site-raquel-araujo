@@ -133,6 +133,15 @@ const wa = whatsappUrl();
           if (window.gtag) gtag('event', 'agendamento_concluido', { method: 'cal.com' });
         },
       });
+      // Depois do diagnóstico, recarrega a agenda já com o resultado no campo de observações
+      document.addEventListener('diagnostico:concluido', function (e) {
+        el.innerHTML = '';
+        Cal('inline', {
+          elementOrSelector: '#cal-inline',
+          calLink: el.dataset.cal,
+          config: { layout: 'month_view', notes: e.detail.resumo },
+        });
+      });
       Cal('ui', { theme: 'light', cssVarsPerTheme: { light: { 'cal-brand': '#132F33' } }, hideEventTypeDetails: false });
     </script>
   )

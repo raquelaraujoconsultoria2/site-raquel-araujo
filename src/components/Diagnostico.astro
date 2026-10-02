@@ -78,7 +78,7 @@ const leituras = [
 
       {
         perguntas.map((p, i) => (
-          <fieldset class="passo" data-passo={i} hidden={i > 0}>
+          <fieldset class="passo" data-passo={i} data-pergunta={p.texto} hidden={i > 0}>
             <legend>
               <span class="contador">
                 Pergunta {i + 1} de {perguntas.length}
@@ -124,6 +124,7 @@ const leituras = [
     const resultado = quiz.querySelector<HTMLElement>('[data-resultado]')!;
     const barra = quiz.querySelector<HTMLElement>('[data-barra]')!;
     const respostas: number[] = [];
+    const escolhas: string[] = [];
     let atual = 0;
 
     const mostrar = (i: number) => {
@@ -141,9 +142,14 @@ const leituras = [
       quiz.querySelector('[data-passo-sugerido]')!.textContent = l.passo;
       mostrar(passos.length);
       resultado.focus({ preventScroll: true });
-      // Leva a leitura para o formulário de contato
+      // Resumo para a Raquel: vai no formulário de contato e no agendamento do Cal.com
+      const resumo = [
+        `Diagnóstico do site: ${l.titulo} (${total}/12)`,
+        ...passos.map((p, j) => `- ${p.dataset.pergunta} → ${escolhas[j]}`),
+      ].join('\n');
       const campo = document.querySelector<HTMLInputElement>('input[name="diagnostico"]');
-      if (campo) campo.value = `${l.titulo} (${total}/12)`;
+      if (campo) campo.value = resumo;
+      document.dispatchEvent(new CustomEvent('diagnostico:concluido', { detail: { resumo } }));
       (window as any).gtag?.('event', 'diagnostico_concluido', { pontuacao: total });
     };
 
@@ -151,6 +157,7 @@ const leituras = [
       passo.querySelectorAll<HTMLButtonElement>('[data-pontos]').forEach((b) =>
         b.addEventListener('click', () => {
           respostas[i] = Number(b.dataset.pontos);
+          escolhas[i] = b.textContent!.trim();
           if (i + 1 < passos.length) {
             mostrar(i + 1);
             passos[i + 1].querySelector<HTMLButtonElement>('.opcao')?.focus({ preventScroll: true });
