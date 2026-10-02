@@ -9,8 +9,8 @@ export const SITE = {
   // Apelido da caixa raquel@ no Microsoft 365
   email: 'contato@raquelaraujoconsultoria.com.br',
 
-  // PENDENTE: número com DDI, só dígitos (ex.: '5519999999999'). Vazio = botão oculto.
-  whatsapp: '',
+  // Número com DDI, só dígitos. Vazio = botão oculto.
+  whatsapp: '5548992070717',
   whatsappMensagem: 'Olá, Raquel! Vim pelo site e gostaria de conversar sobre a minha empresa.',
 
   // Link do Cal.com no formato 'usuario/evento'. Vazio = mostra só o formulário.

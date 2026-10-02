@@ -96,6 +96,12 @@ const ogUrl = new URL(og.src, Astro.site);
           }),
         ),
       );
+      document.addEventListener('click', (e) => {
+        const link = (e.target as Element).closest?.('a[href^="https://wa.me/"]');
+        if (!link) return;
+        const local = link.classList.contains('wa') ? 'botao_flutuante' : link.closest('footer') ? 'rodape' : 'formulario';
+        (window as any).gtag?.('event', 'whatsapp_clique', { local, transport_type: 'beacon' });
+      });
     </script>
   </body>
 </html>
