@@ -88,7 +88,7 @@ const ogUrl = new URL(og.src, Astro.site);
       document.querySelectorAll('.revelar').forEach((el) => io.observe(el));
 
       // Conversões no Analytics (só registram se o visitante aceitou os cookies)
-      document.querySelectorAll<HTMLFormElement>('form[data-netlify]').forEach((form) =>
+      document.querySelectorAll<HTMLFormElement>('form[data-lead]').forEach((form) =>
         form.addEventListener('submit', () =>
           (window as any).gtag?.('event', 'generate_lead', {
             form_name: form.getAttribute('name'),
