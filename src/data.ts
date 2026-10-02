@@ -14,7 +14,7 @@ export const SERVICOS = [
     id: 'conselho',
     titulo: 'Conselho consultivo',
     resumo:
-      'Acompanhamento estratégico recorrente do dono e dos sócios. Uma cadeira de fora, com experiência de dentro, para as decisões que definem o futuro.',
+      'Acompanhamento estratégico recorrente do dono e dos sócios, conduzido por conselheira consultiva certificada. Uma cadeira de fora, com experiência de dentro, para as decisões que definem o futuro.',
     itens: ['Reuniões periódicas de conselho', 'Leitura de indicadores', 'Apoio nas grandes decisões'],
     publico: 'empresas',
   },
@@ -101,3 +101,14 @@ export const FAIXAS_FATURAMENTO = [
   'De R$ 50 a R$ 100 milhões',
   'Acima de R$ 100 milhões',
 ];
+
+export const CERTIFICACAO = {
+  titulo: 'Conselheira Consultiva Certificada',
+  programa: 'ConCertif®',
+  instituicao: 'CELINT',
+  instituicaoNome: 'Centro de Estudos em Liderança e Governança Integrais',
+  numero: 'N1.2025.0425',
+  data: 'julho de 2025',
+  dataISO: '2025-07-16',
+  pdf: '/documentos/certificado-conselheira-consultiva-raquel-araujo.pdf',
+};

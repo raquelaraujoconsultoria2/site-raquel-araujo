@@ -1,0 +1,138 @@
+---
+import { Image } from 'astro:assets';
+import { CERTIFICACAO as C } from '../data';
+import certificado from '../assets/certificado-concertif.jpg';
+
+const motivos = [
+  {
+    titulo: 'Experiência comprovada',
+    texto:
+      'A certificação não é só um curso concluído. Exige comprovar experiência real e apresentar evidências dela antes de conceder o título.',
+  },
+  {
+    titulo: 'Formação específica em conselho',
+    texto:
+      'Curso de Formação de Conselheiros Consultivos, com atividades por módulo, entrega de trabalhos e prova final.',
+  },
+  {
+    titulo: 'Método no lugar de opinião',
+    texto:
+      'Para a sua empresa, significa um conselho conduzido com ritos, boas práticas de governança e foco na perenidade do negócio.',
+  },
+];
+---
+
+<section class="secao secao--escura certificacao" id="certificacao">
+  <div class="container grade">
+    <div class="texto revelar">
+      <p class="rotulo">Certificação</p>
+      <h2>Conselheira Consultiva <em class="destaque">Certificada.</em></h2>
+      <p class="lead">
+        Raquel é certificada pelo {C.programa}, o Programa de Certificação de Conselheiros Consultivos do {C.instituicao}{' '}
+        ({C.instituicaoNome}).
+      </p>
+      <h3 class="sub">Por que isso importa para a sua empresa</h3>
+      <ul class="motivos">
+        {
+          motivos.map((m) => (
+            <li>
+              <strong>{m.titulo}</strong>
+              <span>{m.texto}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <figure class="cert revelar">
+      <a href={C.pdf} target="_blank" rel="noopener" aria-label="Abrir o certificado em PDF">
+        <Image
+          src={certificado}
+          alt={`Certificado ${C.programa} de ${C.titulo} emitido pelo ${C.instituicao} para Raquel Araújo`}
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 1024px) 480px, 100vw"
+        />
+      </a>
+      <figcaption>
+        Certificado nº {C.numero} · {C.data}
+        <a href={C.pdf} target="_blank" rel="noopener" class="link-seta">Ver certificado</a>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .grade {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+  @media (min-width: 1024px) {
+    .grade {
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+  }
+  .sub {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dourado);
+    margin: 2.5rem 0 1.25rem;
+  }
+  .motivos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+  }
+  .motivos li {
+    display: grid;
+    gap: 0.25rem;
+    padding-left: 1.25rem;
+    border-left: 1px solid rgb(184 149 90 / 0.6);
+  }
+  .motivos strong {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.2rem;
+    color: var(--creme);
+  }
+  .motivos span {
+    color: rgb(245 243 238 / 0.75);
+    font-size: 0.98rem;
+  }
+  .cert {
+    margin: 0;
+    max-width: 520px;
+    justify-self: center;
+  }
+  .cert a:first-child {
+    display: block;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px -20px rgb(0 0 0 / 0.6);
+    transition: transform 0.25s;
+  }
+  .cert a:first-child:hover {
+    transform: translateY(-3px);
+  }
+  .cert :global(img) {
+    width: 100%;
+    height: auto;
+  }
+  figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: rgb(245 243 238 / 0.65);
+  }
+  figcaption .link-seta {
+    color: var(--areia);
+  }
+</style>

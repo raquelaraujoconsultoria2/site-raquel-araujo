@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import CabecalhoPagina from '../components/CabecalhoPagina.astro';
 import ChamadaFinal from '../components/ChamadaFinal.astro';
+import Certificacao from '../components/Certificacao.astro';
 import { Picture } from 'astro:assets';
 import foto from '../assets/fotos/raquel-6737.jpg';
 import foto2 from '../assets/fotos/raquel-6671.jpg';
@@ -10,7 +11,7 @@ import foto3 from '../assets/fotos/raquel-6516.jpg';
 // PENDENTE: Raquel revisar a biografia e confirmar quais números da trajetória podem ser publicados.
 const papeis = [
   { t: 'Empresária', d: 'Ajudou a construir a American Burrs do zero até a liderança nacional no seu segmento.' },
-  { t: 'Conselheira', d: 'Integra o conselho da empresa que ajudou a construir.' },
+  { t: 'Conselheira', d: 'Conselheira Consultiva Certificada pelo ConCertif® (CELINT). Integra o conselho da empresa que ajudou a construir.' },
   { t: 'Estrategista', d: 'Ajuda outros donos a estruturar estratégia, governança e rotina de gestão.' },
   { t: 'Advogada', d: 'Formação em Direito, base para o olhar sobre sociedade, contratos e governança.' },
 ];
@@ -64,6 +65,8 @@ const papeis = [
       </aside>
     </div>
   </section>
+
+  <Certificacao />
 
   <section class="fotos">
     <Picture src={foto2} alt="Raquel Araújo encostada em uma parede de tijolos, segurando um notebook" widths={[480, 800, 1200]} sizes="(min-width: 768px) 40vw, 100vw" formats={['avif', 'webp']} />

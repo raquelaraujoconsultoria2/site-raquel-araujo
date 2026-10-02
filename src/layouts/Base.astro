@@ -59,7 +59,17 @@ const ogUrl = new URL(og.src, Astro.site);
         image: ogUrl.href,
         email: SITE.email,
         areaServed: 'BR',
-        founder: { '@type': 'Person', name: SITE.nome, jobTitle: 'Conselheira e estrategista' },
+        founder: {
+          '@type': 'Person',
+          name: SITE.nome,
+          jobTitle: 'Conselheira Consultiva Certificada e estrategista',
+          hasCredential: {
+            '@type': 'EducationalOccupationalCredential',
+            name: 'Conselheiro Consultivo Certificado (ConCertif®)',
+            credentialCategory: 'certification',
+            recognizedBy: { '@type': 'Organization', name: 'CELINT — Centro de Estudos em Liderança e Governança Integrais' },
+          },
+        },
       })}
     />
     <slot name="head" />
