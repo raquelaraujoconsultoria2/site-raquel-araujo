@@ -4,11 +4,19 @@ interface Props {
   artigo: CollectionEntry<'artigos'>;
 }
 const { artigo } = Astro.props;
-const { titulo, resumo, categoria, tipo, data } = artigo.data;
+const { titulo, resumo, categoria, tipo, data, video } = artigo.data;
 const dataFmt = data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC' });
 ---
 
 <article class="card">
+  {
+    tipo === 'video' && video && (
+      <div class="miniatura">
+        <img src={`https://i.ytimg.com/vi/${video}/hqdefault.jpg`} alt="" loading="lazy" width="480" height="360" />
+        <span class="play" aria-hidden="true" />
+      </div>
+    )
+  }
   <p class="meta">
     <span>{tipo === 'video' ? 'Vídeo' : 'Artigo'} · {categoria}</span>
     <time datetime={data.toISOString()}>{dataFmt}</time>
@@ -19,6 +27,37 @@ const dataFmt = data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long'
 </article>
 
 <style>
+  .miniatura {
+    position: relative;
+    margin: -2rem -2rem 1.5rem;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 6px 6px 0 0;
+    background: var(--petroleo);
+  }
+  .miniatura img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .play {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 56px;
+    height: 56px;
+    margin: -28px 0 0 -28px;
+    border-radius: 50%;
+    background: rgb(19 47 51 / 0.85);
+  }
+  .play::after {
+    content: '';
+    position: absolute;
+    left: 22px;
+    top: 17px;
+    border-left: 16px solid var(--areia);
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+  }
   .card {
     position: relative;
     display: flex;

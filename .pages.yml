@@ -1,0 +1,72 @@
+# Painel de conteúdo da Raquel (Pages CMS — app.pagescms.org)
+# Cada item salvo aqui vira um arquivo em src/content/artigos e o Netlify publica sozinho.
+
+media:
+  - name: imagens
+    label: Imagens
+    input: public/imagens/conteudos
+    output: /imagens/conteudos
+    rename: safe
+    categories: [image]
+
+content:
+  - name: conteudos
+    label: Artigos e vídeos
+    type: collection
+    path: src/content/artigos
+    filename: '{primary}.md'
+    format: yaml-frontmatter
+    view:
+      fields: [titulo, tipo, categoria, data, rascunho]
+      primary: titulo
+      sort: [data, titulo]
+      default:
+        sort: data
+        order: desc
+    fields:
+      - name: titulo
+        label: Título
+        type: string
+        required: true
+      - name: tipo
+        label: É um artigo ou um vídeo?
+        type: select
+        default: artigo
+        options:
+          values:
+            - name: artigo
+              label: Artigo (texto)
+            - name: video
+              label: Vídeo do YouTube
+      - name: resumo
+        label: Resumo
+        description: Uma ou duas frases. Aparece na lista de conteúdos e no Google.
+        type: text
+        required: true
+      - name: categoria
+        label: Categoria
+        type: select
+        required: true
+        options:
+          values: [Estratégia, Governança, Gestão, Liderança, Sucessão]
+      - name: data
+        label: Data de publicação
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: video
+        label: Link do YouTube
+        description: Só para vídeos. Cole o link do jeito que o YouTube mostra (ex. https://youtu.be/abc123).
+        type: string
+      - name: rascunho
+        label: Rascunho (salvar sem publicar no site)
+        type: boolean
+        default: false
+      - name: body
+        label: Texto
+        description: Para vídeos, é opcional (pode ser um comentário sobre o vídeo).
+        type: rich-text
+        options:
+          format: markdown
+          media: imagens
