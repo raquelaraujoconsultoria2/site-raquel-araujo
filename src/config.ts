@@ -6,15 +6,16 @@ export const SITE = {
   descricao:
     'Consultoria de empresário para empresário. Estratégia, governança e rotina de gestão para pequenas e médias empresas crescerem sem depender do dono para tudo.',
 
-  // PENDENTE: confirmar e-mail no Microsoft 365
+  // Apelido da caixa raquel@ no Microsoft 365
   email: 'contato@raquelaraujoconsultoria.com.br',
 
   // PENDENTE: número com DDI, só dígitos (ex.: '5519999999999'). Vazio = botão oculto.
   whatsapp: '',
   whatsappMensagem: 'Olá, Raquel! Vim pelo site e gostaria de conversar sobre a minha empresa.',
 
-  // PENDENTE: link do Cal.com no formato 'usuario/evento'. Vazio = mostra só o formulário.
-  cal: '',
+  // Link do Cal.com no formato 'usuario/evento'. Vazio = mostra só o formulário.
+  // Se o nome de usuário dela mudar no Cal.com, atualizar aqui.
+  cal: 'raquel-araujo-feh1oh/conversa-inicial',
 
   // PENDENTE: ID do Google Analytics 4 (G-XXXXXXX). Só carrega após o aceite de cookies.
   ga4: '',

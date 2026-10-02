@@ -137,10 +137,10 @@ const wa = whatsappUrl();
     display: grid;
     gap: 2rem;
   }
+  /* Com agenda: calendário na largura toda e o formulário logo abaixo */
   @media (min-width: 1024px) {
-    .grade:not(.sem-agenda) {
-      grid-template-columns: 1.1fr 0.9fr;
-      align-items: start;
+    .grade:not(.sem-agenda) .campos {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
   @media (min-width: 1024px) {
@@ -178,8 +178,11 @@ const wa = whatsappUrl();
     font-weight: 600;
   }
   .cal {
-    min-height: 34rem;
+    min-height: 36rem;
     overflow: auto;
+  }
+  .agenda {
+    padding-inline: clamp(0.5rem, 2vw, 2.5rem);
   }
   .agenda,
   .formulario {
