@@ -127,6 +127,12 @@ const wa = whatsappUrl();
       var el = document.getElementById('cal-inline');
       Cal('init', { origin: 'https://cal.com' });
       Cal('inline', { elementOrSelector: '#cal-inline', calLink: el.dataset.cal, config: { layout: 'month_view' } });
+      Cal('on', {
+        action: 'bookingSuccessfulV2',
+        callback: function () {
+          if (window.gtag) gtag('event', 'agendamento_concluido', { method: 'cal.com' });
+        },
+      });
       Cal('ui', { theme: 'light', cssVarsPerTheme: { light: { 'cal-brand': '#132F33' } }, hideEventTypeDetails: false });
     </script>
   )

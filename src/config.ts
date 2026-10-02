@@ -17,8 +17,8 @@ export const SITE = {
   // Se o nome de usuário dela mudar no Cal.com, atualizar aqui.
   cal: 'raquel-araujo-feh1oh/conversa-inicial',
 
-  // PENDENTE: ID do Google Analytics 4 (G-XXXXXXX). Só carrega após o aceite de cookies.
-  ga4: '',
+  // Google Analytics 4. Só carrega após o aceite de cookies.
+  ga4: 'G-QKZNT66SEC',
 
   // Seção "Empresas e resultados": fica oculta até existirem logos e depoimentos.
   mostrarResultados: false,
