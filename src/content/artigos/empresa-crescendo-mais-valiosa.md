@@ -3,6 +3,8 @@ titulo: 'Sua empresa está crescendo. Mas está ficando mais valiosa?'
 resumo: 'Faturar mais não é o mesmo que valer mais. O que separa uma empresa que só cresce de uma que se torna um patrimônio.'
 data: 2026-10-01
 categoria: Estratégia
+tipo: artigo
+rascunho: false
 ---
 
 <!-- PENDENTE: texto provisório. Substituir pelo texto original da Raquel. -->
